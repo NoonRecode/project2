@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Mouse Promotion{% endblock %}
+
+{% block content %}
+    <h1 class="text-center">Choose a Mouse Brand</h1>
+    <div class="row">
+        {% for brand in brands %}
+            <div class="col-md-3">
+                <div class="card text-center p-3">
+                    <a href="{% url 'filter_by_brand' brand.id %}" class="text-white">{{ brand.name }}</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <h2 class="text-center mt-4">Available Mice</h2>
+    <div class="row">
+        {% for mouse in mice %}
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <img src="{{ mouse.image.url }}" class="card-img-top" alt="{{ mouse.name }}">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ mouse.name }}</h5>
+                        <p class="card-text">${{ mouse.price }}</p>
+                        <p class="card-text">{{ mouse.description }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
