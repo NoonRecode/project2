@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit News{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-danger">Edit News</h2>
+
+    <div class="card my-4">
+        <div class="card-header bg-danger text-white">
+            <h4>Edit News</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="id_title" name="title" value="{{ news.title }}">
+                </div>
+                <div class="mb-3">
+                    <label for="id_content" class="form-label">Content</label>
+                    <textarea class="form-control" id="id_content" name="content" rows="4">{{ news.content }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="id_image" class="form-label">Image</label>
+                    <input type="file" class="form-control" id="id_image" name="image">
+                    {% if news.image %}
+                        <img src="{{ news.image.url }}" alt="Current Image" width="100">
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-danger w-100">Save Changes</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -16,4 +16,11 @@ class Mouse(models.Model):
     def __str__(self):
         return self.name
 
+class NewsArticle(models.Model):
+    title = models.CharField(max_length=255)  # หัวข้อข่าว
+    image = models.ImageField(upload_to='news_images/')  # อัปโหลดรูปภาพ
+    content = models.TextField()  # เนื้อหาข่าว
+    date_posted = models.DateTimeField(auto_now_add=True)  # วันที่โพสต์
 
+    def __str__(self):
+        return self.title

@@ -1,6 +1,7 @@
 from django import forms
 from .models import Mouse
-
+from .models import NewsArticle
+from .models import NewsArticle
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -11,3 +12,8 @@ class CustomUserCreationForm(UserCreationForm):
         model = User
         fields = ["username", "email", "password1", "password2"]  # เพิ่ม email เข้าไป
 
+
+class NewsForm(forms.ModelForm):
+    class Meta:
+        model = NewsArticle
+        fields = ['title', 'content', 'image']

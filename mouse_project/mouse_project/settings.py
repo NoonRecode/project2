@@ -29,8 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Application definition
 
@@ -59,7 +58,7 @@ ROOT_URLCONF = 'mouse_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "templates")],  
+        'DIRS': [BASE_DIR / "templates"],  
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
