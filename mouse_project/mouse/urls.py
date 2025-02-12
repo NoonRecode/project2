@@ -11,6 +11,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('adminpage/', views.admin_page, name='adminpage'),
     path('news/', views.news, name='news'),
+    path('news/<int:id>/', views.article_detail, name='article-detail'),
     path('edit_news/<int:news_id>/', edit_news, name='edit_news'),
     path('delete_news/<int:news_id>/', delete_news, name='delete_news'),
     

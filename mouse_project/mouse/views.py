@@ -103,3 +103,7 @@ def delete_news(request, news_id):
     news = get_object_or_404(NewsArticle, id=news_id)
     news.delete()
     return redirect('adminpage')
+
+def article_detail(request, id):
+    article = get_object_or_404(NewsArticle, id=id)
+    return render(request, 'article_detail.html', {'article': article})
