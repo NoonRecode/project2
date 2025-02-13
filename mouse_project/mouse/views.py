@@ -25,56 +25,45 @@ def register_view(request):
         email = request.POST['email']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
-
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
             return redirect('register')
-
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exists.")
             return redirect('register')
-
         user = User.objects.create_user(username=username, email=email, password=password1)
         messages.success(request, "Registration successful! You can now log in.")
         return redirect('login')
-
     return render(request, 'accounts/register.html')
 
 def login_view(request):
-    form = AuthenticationForm()  # กำหนด form ในทุกกรณี
-    
+    form = AuthenticationForm()  
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            user = form.get_user()  # ดึงผู้ใช้จากฟอร์มที่ผ่านการตรวจสอบแล้ว
-            
-            # ตรวจสอบว่า username และ password ตรงกับที่กำหนดหรือไม่
+            user = form.get_user()  
             if user.username == "admin" and request.POST['password'] == "noon123":
-                login(request, user)  # ล็อกอิน
-                return redirect('adminpage')  # เปลี่ยนเส้นทางไปหน้า adminpage.html
-            
-            # ถ้าไม่ใช่ user noon ให้ไปหน้า home
+                login(request, user)  
+                return redirect('adminpage')  
             login(request, user)
-            return redirect('home')
-        
+            return redirect('home')      
     return render(request, "accounts/login.html", {'form': form})
 
 @login_required
 def admin_page(request):
-    articles = NewsArticle.objects.all()  # ดึงข้อมูลข่าวทั้งหมด
-    users = User.objects.all()  # ดึงรายชื่อผู้ใช้ทั้งหมด
-    form = NewsForm()  # ฟอร์มเพิ่มข่าว
-
+    articles = NewsArticle.objects.all()  
+    users = User.objects.all()  
+    form = NewsForm()  
     if request.method == 'POST':
         form = NewsForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()  # บันทึกข่าวลงฐานข้อมูล
+            form.save() 
             return redirect('adminpage')
 
     return render(request, 'adminpage.html', {
         'users': users, 
         'form': form,
-        'articles': articles  # เพิ่มการส่งข้อมูลข่าว
+        'articles': articles  
     })
 
 def logout_view(request):
@@ -88,14 +77,12 @@ def news(request):
 
 @login_required
 def edit_news(request, news_id):
-    news = get_object_or_404(NewsArticle, id=news_id)  # ดึงข่าวที่ต้องการแก้ไข
-
+    news = get_object_or_404(NewsArticle, id=news_id)  
     if request.method == "POST":
         news.title = request.POST['title']
         news.content = request.POST['content']
         news.save()
         return redirect('adminpage')  
-
     return render(request, 'edit_news.html', {'news': news})
 
 @login_required
